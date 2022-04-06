@@ -96,7 +96,11 @@ public class Shop : MonoBehaviour
                     characterScript.Character[i].SetActive(false);
 
                     buttonImages[i].color = inActiveColor;
-                    buttonTexts[i].text = "Inactive";
+
+                    if (PlayerPrefs.GetString("Bought" + i) == "true")
+                    {
+                        buttonTexts[i].text = "Inactive";
+                    }
                 }
 
                 buttonImages[PlayerPrefs.GetInt("CharacterActive", 0)].color = activeColor;
@@ -112,7 +116,11 @@ public class Shop : MonoBehaviour
             {
                 characterScript.Character[i].SetActive(false);
                 buttonImages[i].color = inActiveColor;
-                buttonTexts[i].text = "Inactive";
+
+                if (PlayerPrefs.GetString("Bought" + i) == "true")
+                {
+                    buttonTexts[i].text = "Inactive";
+                }
             }
 
             buttonImages[PlayerPrefs.GetInt("CharacterActive", 0)].color = activeColor;

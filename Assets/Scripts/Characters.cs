@@ -13,9 +13,4 @@ public class Characters : MonoBehaviour
 
         Character[PlayerPrefs.GetInt("CharacterActive")].SetActive(true);
     }
-
-    void Update()
-    {
-        //Character[PlayerPrefs.GetInt("CharacterActive")].SetActive(true);
-    }
 }

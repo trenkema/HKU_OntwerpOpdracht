@@ -49,6 +49,14 @@ public class ButtonManager : MonoBehaviour
         Application.Quit();
     }
 
+    public void CloseAllPanels()
+    {
+        foreach (var panel in Panel)
+        {
+            panel.SetActive(false);
+        }
+    }
+
     public void OpenPanel(int panel)
     {
         Panel[panel].SetActive(true);

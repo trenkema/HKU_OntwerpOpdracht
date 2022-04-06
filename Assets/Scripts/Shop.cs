@@ -6,13 +6,20 @@ using UnityEngine.UI;
 
 public class Shop : MonoBehaviour
 {
-    private int Coins;
+    public Color inActiveColor;
+    public Color activeColor;
+
     public TextMeshProUGUI coinsBalance;
-    public GameObject[] characters;
+
+    public Image[] buttonImages;
+
+    public TextMeshProUGUI[] buttonTexts;
+
     public int[] price;
-    public GameObject[] active;
 
     public Characters characterScript;
+
+    private int Coins;
 
     void Start()
     {
@@ -20,41 +27,37 @@ public class Shop : MonoBehaviour
         if (!PlayerPrefs.HasKey("Coins"))
         {
             PlayerPrefs.SetInt("Coins", 0);
-            PlayerPrefs.GetInt("Coins");
         }
-        else
-            PlayerPrefs.GetInt("Coins");
 
         // Check Which Character Is Active
         if (!PlayerPrefs.HasKey("CharacterActive"))
         {
             PlayerPrefs.SetInt("CharacterActive", 0);
-            PlayerPrefs.GetInt("CharacterActive");
         }
-        else
-            PlayerPrefs.GetInt("CharacterActive");
 
         // First disable all character actives
-        for (int i = 0; i < characters.Length; i++)
+        for (int i = 0; i < buttonImages.Length; i++)
         {
-            characters[i].SetActive(false);
+            buttonImages[i].color = inActiveColor;
 
             if (!PlayerPrefs.HasKey("Bought" + i))
             {
-                PlayerPrefs.SetString("Bought" + i, "false");
-                PlayerPrefs.GetString("Bought" + i);
+                if (i != 0)
+                    PlayerPrefs.SetString("Bought" + i, "false");
+                else
+                    PlayerPrefs.SetString("Bought" + i, "true");
             }
-            else
-                PlayerPrefs.GetString("Bought" + i);
 
             if (PlayerPrefs.GetString("Bought" + i) == "true")
             {
-                characters[i].SetActive(true);
+                buttonTexts[i].text = "Inactive";
             }
         }
 
         // Then Enable The True Active Character
-        active[PlayerPrefs.GetInt("CharacterActive")].SetActive(true);
+        buttonImages[PlayerPrefs.GetInt("CharacterActive", 0)].color = activeColor;
+        buttonTexts[PlayerPrefs.GetInt("CharacterActive", 0)].text = "Active";
+        characterScript.Character[PlayerPrefs.GetInt("CharacterActive", 0)].SetActive(true);
 
         // Asign The PlayerPref Coins To The Variable Coins
         Coins = PlayerPrefs.GetInt("Coins");
@@ -70,7 +73,7 @@ public class Shop : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.L))
         {
             PlayerPrefs.DeleteKey("CharacterActive");
-            for (int i = 0; i < characters.Length; i++)
+            for (int i = 0; i < buttonImages.Length; i++)
             {
                 PlayerPrefs.DeleteKey("Bought" + i);
             }
@@ -79,7 +82,6 @@ public class Shop : MonoBehaviour
 
     public void SetActive(int i)
     {
-        Debug.Log(i);
         if (PlayerPrefs.GetString("Bought" + i) == "false")
         {
             if (Coins >= price[i])
@@ -89,29 +91,33 @@ public class Shop : MonoBehaviour
                 PlayerPrefs.SetInt("Coins", Coins);
                 PlayerPrefs.SetInt("CharacterActive", i);
 
-                for (i = 0; i < characters.Length; i++)
+                for (i = 0; i < buttonImages.Length; i++)
                 {
                     characterScript.Character[i].SetActive(false);
-                    active[i].SetActive(false);
+
+                    buttonImages[i].color = inActiveColor;
+                    buttonTexts[i].text = "Inactive";
                 }
 
-                characters[PlayerPrefs.GetInt("CharacterActive")].SetActive(true);
-                active[PlayerPrefs.GetInt("CharacterActive")].SetActive(true);
-                characterScript.Character[PlayerPrefs.GetInt("CharacterActive")].SetActive(true);
+                buttonImages[PlayerPrefs.GetInt("CharacterActive", 0)].color = activeColor;
+                buttonTexts[PlayerPrefs.GetInt("CharacterActive", 0)].text = "Active";
+                characterScript.Character[PlayerPrefs.GetInt("CharacterActive", 0)].SetActive(true);
             }
         }
         else
         {
             PlayerPrefs.SetInt("CharacterActive", i);
 
-            for (i = 0; i < characters.Length; i++)
+            for (i = 0; i < buttonImages.Length; i++)
             {
                 characterScript.Character[i].SetActive(false);
-                active[i].SetActive(false);
+                buttonImages[i].color = inActiveColor;
+                buttonTexts[i].text = "Inactive";
             }
 
-            active[PlayerPrefs.GetInt("CharacterActive")].SetActive(true);
-            characterScript.Character[PlayerPrefs.GetInt("CharacterActive")].SetActive(true);
+            buttonImages[PlayerPrefs.GetInt("CharacterActive", 0)].color = activeColor;
+            buttonTexts[PlayerPrefs.GetInt("CharacterActive", 0)].text = "Active";
+            characterScript.Character[PlayerPrefs.GetInt("CharacterActive", 0)].SetActive(true);
         }
     }
 }

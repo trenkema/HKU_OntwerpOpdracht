@@ -12,6 +12,8 @@ public class Player : MonoBehaviour
 
     public VirtualJoystick joystick;
 
+    float rotateAngle = 0;
+
     void Start()
     {
         playerRB = GetComponent<Rigidbody2D>();
@@ -19,18 +21,9 @@ public class Player : MonoBehaviour
 
     void FixedUpdate()
     {
-        float rotateAngle = 0;
         rotateAngle = joystick.Horizontal() * rotateSpeed * -1;
 
         playerRB.angularVelocity = rotateAngle;
         playerRB.velocity = transform.up * speed;
-    }
-
-    void OnCollisionEnter2D(Collision2D coll)
-    {
-        if(coll.gameObject.tag == "Edge")
-        {
-            gameObject.transform.position = new Vector3(Random.Range(-2.75f, 2.75f), Random.Range(-2f, 2f), 0.0f);
-        }
     }
 }

@@ -13,12 +13,11 @@ public class Coin : MonoBehaviour
     ParticleSystem explosionsAll;
     CameraShaker cameraShake;
 
-    // Start is called before the first frame update
-    void Start()
+    public void Setup(CameraShaker _cameraShaker, Score _score, SpawnCoins _spawnCoins)
     {
-        cameraShake = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<CameraShaker>();
-        scoreScript = GameObject.FindGameObjectWithTag("EventSystem").GetComponent<Score>();
-        spawnCoins = GameObject.FindGameObjectWithTag("EventSystem").GetComponent<SpawnCoins>();
+        cameraShake = _cameraShaker;
+        scoreScript = _score;
+        spawnCoins = _spawnCoins;
 
         if (Color == 0)
             assignPoints = spawnCoins.ColorPoints[0];
@@ -28,19 +27,12 @@ public class Coin : MonoBehaviour
             assignPoints = spawnCoins.ColorPoints[2];
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     void OnCollisionEnter2D(Collision2D col)
     {
-        print("Collision Hit");
         cameraShake.shouldShake = true;
         explosionsAll = Instantiate(explosions, gameObject.transform.position, Quaternion.identity);
         explosions.Play();
         Destroy(gameObject);
-        scoreScript.currentScore += assignPoints;
+        EventSystemNew<int>.RaiseEvent(Event_Type.ADD_SCORE, assignPoints);
     }
 }

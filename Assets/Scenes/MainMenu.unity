@@ -13747,7 +13747,7 @@ MonoBehaviour:
   buttonTexts:
   - {fileID: 1856476310}
   - {fileID: 1467744997}
-  price: 0000000096000000
+  price: 0000000032000000
   characterScript: {fileID: 607269241}
 --- !u!114 &1293776696
 MonoBehaviour:
@@ -14765,7 +14765,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 150
+  m_text: 50
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 7ee1975c645f7274bad6e535364c39c8, type: 2}
   m_sharedMaterial: {fileID: 5385843174091618575, guid: 7ee1975c645f7274bad6e535364c39c8,

@@ -7,7 +7,7 @@ public class CameraShaker : MonoBehaviour
 {
     public float power = 0.7f;
     public float duration = 1.0f;
-    private Transform camera;
+    public Transform camera;
     public float slowDownAmount = 1.0f;
     public bool shouldShake = false;
     public GameObject UI;
@@ -17,7 +17,6 @@ public class CameraShaker : MonoBehaviour
 
     void Start()
     {
-        camera = Camera.main.transform;
         startPosition = camera.localPosition;
         initialDuration = duration;
     }

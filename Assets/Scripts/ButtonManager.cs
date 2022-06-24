@@ -8,7 +8,7 @@ public class ButtonManager : MonoBehaviour
 {
     public GameObject[] Panel;
 
-    CameraShaker cameraShake;
+    public CameraShaker cameraShake;
 
     public GameObject[] UnlockedLevel;
     public int[] UnlockedLevelIndex;
@@ -16,7 +16,6 @@ public class ButtonManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
         for(int i = 0; i < UnlockedLevel.Length; i++)
         {
             Debug.Log(PlayerPrefs.GetInt("UnlockedLevel" + UnlockedLevel[i]));
@@ -28,9 +27,6 @@ public class ButtonManager : MonoBehaviour
             else
                 UnlockedLevel[i].SetActive(true);
         }
-
-        cameraShake = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<CameraShaker>();
-        Time.timeScale = 1;
     }
 
     // Update is called once per frame

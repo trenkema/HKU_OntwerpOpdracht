@@ -26,6 +26,16 @@ public class Score : MonoBehaviour
 
     public GameObject WinnerPanel;
 
+    private void OnEnable()
+    {
+        EventSystemNew<int>.Subscribe(Event_Type.ADD_SCORE, AddScore);
+    }
+
+    private void OnDisable()
+    {
+        EventSystemNew<int>.Unsubscribe(Event_Type.ADD_SCORE, AddScore);
+    }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -38,14 +48,16 @@ public class Score : MonoBehaviour
         rewardText.text = "+" + rewardCoins + " Coins";
     }
 
-    // Update is called once per frame
-    void Update()
+    private void AddScore(int _scoreToAdd)
     {
-        score.text = currentScore + " / " + maxScore;
-        if(currentScore <= 0)
+        currentScore += _scoreToAdd;
+
+        if (currentScore <= 0)
         {
             currentScore = 0;
         }
+
+        score.text = currentScore + " / " + maxScore;
 
         if (currentScore >= maxScore && !winner)
         {

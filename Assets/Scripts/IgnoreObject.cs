@@ -6,7 +6,17 @@ public class IgnoreObject : MonoBehaviour
 {
     private GameObject ignoreObject;
 
-    void Start()
+    private void OnEnable()
+    {
+        EventSystemNew.Subscribe(Event_Type.GAME_STARTED, GameStarted);
+    }
+
+    private void OnDisable()
+    {
+        EventSystemNew.Unsubscribe(Event_Type.GAME_STARTED, GameStarted);
+    }
+
+    private void GameStarted()
     {
         ignoreObject = GameObject.FindWithTag("Player");
 
@@ -14,10 +24,5 @@ public class IgnoreObject : MonoBehaviour
         {
             Physics2D.IgnoreCollision(ignoreObject.GetComponent<Collider2D>(), gameObject.GetComponent<Collider2D>());
         }
-    }
-
-    void Update()
-    {
-        ignoreObject = GameObject.FindWithTag("Player");
     }
 }
